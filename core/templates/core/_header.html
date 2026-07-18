@@ -1,0 +1,62 @@
+<header class="bg-background border-b border-border sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="{% url 'home' %}" class="text-xl font-bold">RoadsideAuto</a>
+  
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="{% url 'services' %}" class="text-text-secondary hover:text-accent">Services</a>
+          <a href="{% url 'modifications' %}" class="text-text-secondary hover:text-accent">4x4 Modifications</a>
+          <a href="{% url 'gallery' %}" class="text-text-secondary hover:text-accent">Gallery</a>
+          <a href="{% url 'about' %}" class="text-text-secondary hover:text-accent">About</a>
+          <a href="{% url 'contact' %}" class="text-text-secondary hover:text-accent">Contact</a>
+        </nav>
+  
+        <div class="hidden md:flex items-center gap-6">
+            <a href="tel:0456404565" class="font-medium hover:text-accent">0456 404 565</a>
+            {% comment %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="text-text-secondary hover:text-accent">My Account</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-text-secondary hover:text-accent">Login</a>
+            {% endif %}
+            {% endcomment %}
+        </div>
+  
+        <button id="menu-toggle" class="md:hidden" aria-label="Open menu">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 z-50 bg-black/60">
+      <div class="absolute right-0 top-0 h-full w-64 bg-surface p-6">
+        <button id="menu-close" class="mb-8" aria-label="Close menu">✕</button>
+        <nav class="flex flex-col gap-6">
+          <a href="{% url 'services' %}" class="text-lg hover:text-accent">Services</a>
+          <a href="{% url 'modifications' %}" class="text-lg hover:text-accent">4x4 Modifications</a>
+          <a href="{% url 'gallery' %}" class="text-lg hover:text-accent">Gallery</a>
+          <a href="{% url 'about' %}" class="text-lg hover:text-accent">About</a>
+          <a href="{% url 'contact' %}" class="text-lg hover:text-accent">Contact</a>
+          {% comment %}
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="text-lg hover:text-accent">My Account</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="text-lg hover:text-accent">Login</a>
+          {% endif %}
+          {% endcomment %}
+          <a href="tel:0456404565" class="text-lg text-accent font-medium">0456 404 565</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  
+  <script>
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('hidden');
+    });
+    document.getElementById('menu-close').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('hidden');
+    });
+  </script>
