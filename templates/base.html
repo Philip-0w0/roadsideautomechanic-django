@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}RoadsideAuto{% endblock %}</title>
+  <meta name="description" content="{% block description %}Mechanical repairs, servicing and 4x4 maintenance.{% endblock %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#0d0f10',
+            surface: '#171a1c',
+            'surface-light': '#222629',
+            'text-primary': '#f5f5f2',
+            'text-secondary': '#b3b8ba',
+            accent: '#d97706',
+            'accent-hover': '#f59e0b',
+            border: '#34393c',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-text-primary">
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
