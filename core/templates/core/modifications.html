@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
+{% block title %}4x4 Modifications | RoadsideAuto{% endblock %}
+{% block description %}Lift kits, bull bars, snorkels and roof racks fitted by RoadsideAuto.{% endblock %}
 {% block content %}
-<div class="mx-auto max-w-6xl px-4 py-16">
-  <h1 class="text-3xl font-bold">Page coming soon</h1>
+<div class="bg-surface py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <h1 class="text-3xl md:text-4xl font-bold">4x4 Modifications</h1>
+    <p class="mt-3 text-text-secondary text-lg">Properly fitted gear for touring and off-road capability.</p>
+    <p class="mt-2 text-text-secondary text-sm">Compatibility and legality depend on your specific vehicle and installation — get in touch to confirm what's right for yours.</p>
+  </div>
+</div>
+
+<div class="mx-auto max-w-6xl px-4 py-16 grid md:grid-cols-2 gap-6">
+  {% for mod in modifications %}
+  <div class="bg-surface border border-border rounded-lg p-6 hover:border-accent transition-colors">
+    <h3 class="font-bold text-lg mb-2">{{ mod.title }}</h3>
+    <p class="text-text-secondary text-sm mb-3">{{ mod.description }}</p>
+    <a href="{% url 'contact' %}" class="text-accent font-medium hover:text-accent-hover text-sm">
+      {{ mod.cta }} →
+    </a>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

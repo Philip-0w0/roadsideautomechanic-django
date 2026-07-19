@@ -52,7 +52,33 @@ def services(request):
     return render(request, 'core/services.html', {'services': services_list})
 
 def modifications(request):
-    return render(request, 'core/modifications.html')
+    modifications_list = [
+        {
+            'title': 'Lift Kits',
+            'summary': 'Suspension lift kit supply and installation for 4x4 vehicles.',
+            'description': "Lift kits fitted to suit your vehicle's intended use — towing, touring, load-carrying, or off-road performance — with attention to how the change affects ride quality, alignment, and handling.",
+            'cta': 'Ask about a lift kit',
+        },
+        {
+            'title': 'Bull Bars',
+            'summary': 'Bull bar supply and fitting for protection and accessory mounting.',
+            'description': 'Bull bars fitted for front-end protection and to support mounted accessories like lighting and recovery points, matched to your specific vehicle.',
+            'cta': 'Ask about bull bar fitting',
+        },
+        {
+            'title': 'Snorkels',
+            'summary': 'Snorkel fitting for improved water fording depth and cleaner air intake.',
+            'description': 'Snorkels fitted to raise the air intake point, useful for water crossings and reducing dust ingestion in harsh off-road conditions.',
+            'cta': 'Ask about snorkel fitting',
+        },
+        {
+            'title': 'Roof Racks',
+            'summary': 'Roof rack supply and fitting for extra storage and touring capacity.',
+            'description': "Roof racks fitted securely and rated for your intended load, whether that's recovery gear, camping equipment, or general touring storage.",
+            'cta': 'Ask about roof rack fitting',
+        },
+    ]
+    return render(request, 'core/modifications.html', {'modifications': modifications_list})
 
 def gallery(request):
     return render(request, 'core/gallery.html')
