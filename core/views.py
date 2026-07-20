@@ -81,7 +81,18 @@ def modifications(request):
     return render(request, 'core/modifications.html', {'modifications': modifications_list})
 
 def gallery(request):
-    return render(request, 'core/gallery.html')
+    projects = [
+        {
+            'title': 'Example Project',
+            'vehicle': '2020 Toyota Hilux',
+            'summary': 'Suspension upgrade and touring setup.',
+            'image': 'core/images/placeholder-1.jpg',
+        },
+        # Add real entries here as photos become available.
+        # Each needs: title, vehicle, summary, and an image path
+        # relative to your static/ folder.
+    ]
+    return render(request, 'core/gallery.html', {'projects': projects})
 
 def about(request):
     return render(request, 'core/about.html')
