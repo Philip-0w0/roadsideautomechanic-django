@@ -1,6 +1,8 @@
+from django.contrib import admin
+from django.urls import path, include, reverse
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
-from django.urls import reverse
+
 
 class StaticViewSitemap(Sitemap):
     def items(self):
@@ -8,6 +10,7 @@ class StaticViewSitemap(Sitemap):
 
     def location(self, item):
         return reverse(item)
+
 
 sitemaps = {'static': StaticViewSitemap}
 
