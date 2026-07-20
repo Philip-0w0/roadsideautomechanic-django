@@ -2,7 +2,124 @@
 {% block title %}RoadsideAuto — Workshop Servicing & 4x4 Specialists, Melbourne{% endblock %}
 {% block description %}Honest mechanical repairs, servicing, and 4x4 modifications in Melbourne. Clear quotes, no surprises.{% endblock %}
 {% block content %}
-<div class="p-10">
-  <h1 class="text-3xl font-bold text-accent">Design tokens working</h1>
-</div>
+
+<!-- Hero -->
+<section class="py-20 text-center">
+  <div class="mx-auto max-w-3xl px-4">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Reliable Workshop Servicing & 4x4 Care</h1>
+    <p class="text-text-secondary text-lg mb-8">Honest workmanship, clear quotes, done right the first time.</p>
+    <a href="{% url 'contact' %}" class="inline-block bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover">
+      Book Now
+    </a>
+  </div>
+</section>
+
+<!-- Trust indicators -->
+<section class="bg-surface py-10 border-y border-border">
+  <div class="mx-auto max-w-6xl px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+    <div>
+      <p class="text-2xl font-bold text-accent">Honest Quotes</p>
+      <p class="text-text-secondary text-sm mt-1">No work starts without your approval</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-accent">All Makes</p>
+      <p class="text-text-secondary text-sm mt-1">General servicing through to 4x4 specialists</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-accent">Melbourne Based</p>
+      <p class="text-text-secondary text-sm mt-1">Workshop servicing the local area</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services overview -->
+<section class="py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Our Services</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      {% for service in featured_services %}
+      <div class="bg-surface border border-border rounded-lg p-6 hover:border-accent transition-colors">
+        <h3 class="font-bold text-lg mb-2">{{ service.title }}</h3>
+        <p class="text-text-secondary text-sm">{{ service.summary }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-8">
+      <a href="{% url 'services' %}" class="text-accent font-medium hover:text-accent-hover">
+        View all services →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 4x4 teaser -->
+<section class="bg-surface py-16">
+  <div class="mx-auto max-w-6xl px-4 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">4x4 Modifications</h2>
+    <p class="text-text-secondary mb-8 max-w-xl mx-auto">
+      Lift kits, bull bars, snorkels, and roof racks — properly fitted for touring and off-road capability.
+    </p>
+    <a href="{% url 'modifications' %}" class="inline-block border border-border px-6 py-3 rounded-md font-medium hover:border-accent hover:text-accent">
+      Explore 4x4 Modifications
+    </a>
+  </div>
+</section>
+
+<!-- Why choose us -->
+<section class="py-16">
+  <div class="mx-auto max-w-6xl px-4">
+    <h2 class="text-2xl md:text-3xl font-bold mb-8 text-center">Why Choose RoadsideAuto</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="text-center">
+        <h3 class="font-bold mb-2">Clear Communication</h3>
+        <p class="text-text-secondary text-sm">We explain the work and the cost before we start.</p>
+      </div>
+      <div class="text-center">
+        <h3 class="font-bold mb-2">4x4 Expertise</h3>
+        <p class="text-text-secondary text-sm">Real experience with touring and off-road vehicles.</p>
+      </div>
+      <div class="text-center">
+        <h3 class="font-bold mb-2">No Upselling</h3>
+        <p class="text-text-secondary text-sm">Honest recommendations, not unnecessary extras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured projects -->
+<section class="bg-surface py-16">
+  <div class="mx-auto max-w-6xl px-4 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">Recent Work</h2>
+    <p class="text-text-secondary mb-8">A look at some recent projects.</p>
+    <a href="{% url 'gallery' %}" class="text-accent font-medium hover:text-accent-hover">
+      View the gallery →
+    </a>
+  </div>
+</section>
+
+<!-- Booking CTA -->
+<section class="py-16 text-center">
+  <div class="mx-auto max-w-xl px-4">
+    <h2 class="text-2xl md:text-3xl font-bold mb-3">Ready to book?</h2>
+    <p class="text-text-secondary mb-6">Get in touch and we'll get your vehicle sorted.</p>
+    <a href="{% url 'contact' %}" class="inline-block bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover">
+      Book Now
+    </a>
+  </div>
+</section>
+
+<!-- Map + hours -->
+<section class="bg-surface py-16 border-t border-border">
+  <div class="mx-auto max-w-6xl px-4 grid md:grid-cols-2 gap-8 items-center">
+    <div>
+      <h3 class="font-bold text-lg mb-2">Trading Hours</h3>
+      <p class="text-text-secondary">Monday–Friday: 10am–6pm</p>
+      <p class="text-text-secondary">Saturday: By request</p>
+    </div>
+    <div class="bg-background border border-border rounded-lg h-48 flex items-center justify-center text-text-secondary">
+      Map placeholder
+    </div>
+  </div>
+</section>
+
 {% endblock %}
