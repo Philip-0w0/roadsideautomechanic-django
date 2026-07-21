@@ -3,10 +3,13 @@
 {% block content %}
 <div class="mx-auto max-w-md px-4 py-16">
   <h1 class="text-3xl font-bold mb-6">Create an Account</h1>
-  <form method="post" class="space-y-4">
+  <form method="post" id="register-form" class="space-y-4">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover w-full">
+    <p id="password-mismatch" class="hidden text-sm" style="color: #ef4444;">
+      The two password fields didn't match.
+    </p>
+    <button type="submit" id="register-submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover w-full disabled:opacity-40 disabled:cursor-not-allowed">
       Register
     </button>
   </form>
@@ -14,4 +17,29 @@
     Already have an account? <a href="{% url 'login' %}" class="text-accent hover:text-accent-hover">Log in</a>
   </p>
 </div>
+
+<script>
+  const password1 = document.getElementById('id_password1');
+  const password2 = document.getElementById('id_password2');
+  const mismatchMessage = document.getElementById('password-mismatch');
+  const submitButton = document.getElementById('register-submit');
+
+  function checkPasswordsMatch() {
+    if (password2.value.length === 0) {
+      mismatchMessage.classList.add('hidden');
+      submitButton.disabled = false;
+      return;
+    }
+    if (password1.value !== password2.value) {
+      mismatchMessage.classList.remove('hidden');
+      submitButton.disabled = true;
+    } else {
+      mismatchMessage.classList.add('hidden');
+      submitButton.disabled = false;
+    }
+  }
+
+  password1.addEventListener('input', checkPasswordsMatch);
+  password2.addEventListener('input', checkPasswordsMatch);
+</script>
 {% endblock %}
