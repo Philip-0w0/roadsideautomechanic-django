@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from .forms import VehicleForm
 
 def register(request):
     if request.method == 'POST':
@@ -16,4 +17,18 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    vehicles = request.user.vehicles.all()
+    return render(request, 'accounts/dashboard.html', {'vehicles': vehicles})
+
+@login_required
+def add_vehicle(request):
+    if request.method == 'POST':
+        form = VehicleForm(request.POST)
+        if form.is_valid():
+            vehicle = form.save(commit=False)
+            vehicle.owner = request.user
+            vehicle.save()
+            return redirect('dashboard')
+    else:
+        form = VehicleForm()
+    return render(request, 'accounts/add_vehicle.html', {'form': form})

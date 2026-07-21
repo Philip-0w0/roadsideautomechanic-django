@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Add a Vehicle | RoadsideAuto{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-md px-4 py-16">
+  <h1 class="text-3xl font-bold mb-6">Add a Vehicle</h1>
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover w-full">
+      Save Vehicle
+    </button>
+  </form>
+</div>
+{% endblock %}

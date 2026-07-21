@@ -6,6 +6,27 @@
   <p class="text-text-secondary mb-8">
     <a href="{% url 'logout' %}" class="text-accent hover:text-accent-hover">Log out</a>
   </p>
-  <p class="text-text-secondary">Your saved vehicles will appear here.</p>
+
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-bold">Your Vehicles</h2>
+    <a href="{% url 'add_vehicle' %}" class="bg-accent text-background px-4 py-2 rounded-md font-medium hover:bg-accent-hover text-sm">
+      + Add Vehicle
+    </a>
+  </div>
+
+  {% if vehicles %}
+  <div class="grid md:grid-cols-2 gap-4">
+    {% for vehicle in vehicles %}
+    <div class="bg-surface border border-border rounded-lg p-4">
+      <h3 class="font-bold">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h3>
+      {% if vehicle.registration %}
+        <p class="text-text-secondary text-sm">Rego: {{ vehicle.registration }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <p class="text-text-secondary">No vehicles saved yet.</p>
+  {% endif %}
 </div>
 {% endblock %}
