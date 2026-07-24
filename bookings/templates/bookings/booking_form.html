@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Book a Service | RoadsideAuto{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-xl px-4 py-16">
+  <h1 class="text-3xl font-bold mb-6">Request a Booking</h1>
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
+
+    <div>{{ form.customer_name.label_tag }} {{ form.customer_name }}</div>
+    <div>{{ form.email.label_tag }} {{ form.email }}</div>
+    <div>{{ form.phone.label_tag }} {{ form.phone }}</div>
+
+    {% if form.show_vehicle_dropdown %}
+      <div>
+        {{ form.vehicle.label_tag }} {{ form.vehicle }}
+      </div>
+    {% endif %}
+
+    <div id="manual-vehicle-fields" {% if form.show_vehicle_dropdown %}class="hidden"{% endif %}>
+      <div>{{ form.vehicle_make.label_tag }} {{ form.vehicle_make }}</div>
+      <div>{{ form.vehicle_model.label_tag }} {{ form.vehicle_model }}</div>
+      <div>{{ form.vehicle_year.label_tag }} {{ form.vehicle_year }}</div>
+      <div>{{ form.registration.label_tag }} {{ form.registration }}</div>
+    </div>
+
+    <div>{{ form.service_category.label_tag }} {{ form.service_category }}</div>
+    <div>{{ form.preferred_date.label_tag }} {{ form.preferred_date }}</div>
+    <div>{{ form.description.label_tag }} {{ form.description }}</div>
+    <div>{{ form.consent }} {{ form.consent.label_tag }}</div>
+
+    <button type="submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover">
+      Submit Request
+    </button>
+  </form>
+</div>
+
+{% if form.show_vehicle_dropdown %}
+<script>
+  const vehicleSelect = document.getElementById('id_vehicle');
+  const manualFields = document.getElementById('manual-vehicle-fields');
+
+  function toggleManualFields() {
+    if (vehicleSelect.value === '') {
+      manualFields.classList.remove('hidden');
+    } else {
+      manualFields.classList.add('hidden');
+    }
+  }
+
+  vehicleSelect.addEventListener('change', toggleManualFields);
+  toggleManualFields();
+</script>
+{% endif %}
+{% endblock %}

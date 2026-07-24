@@ -18,5 +18,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('accounts/', include('accounts.urls')),
+    path('booking/', include('bookings.urls')),
     path('', include('core.urls')),
 ]
