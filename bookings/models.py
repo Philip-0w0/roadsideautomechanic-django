@@ -2,6 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from accounts.models import Vehicle
 
+class AvailabilitySlot(models.Model):
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    max_bookings = models.PositiveIntegerField(default=1)
+    is_blocked = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('date', 'start_time')
+        ordering = ['date', 'start_time']
+
+    def __str__(self):
+        return f"{self.date} {self.start_time}"
+
+
 class BookingRequest(models.Model):
     STATUS_CHOICES = [
         ('new', 'New'),
@@ -26,6 +41,7 @@ class BookingRequest(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
     created_at = models.DateTimeField(auto_now_add=True)
+    slot = models.ForeignKey(AvailabilitySlot, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f"{self.customer_name} — {self.vehicle_make} {self.vehicle_model}"

@@ -18,18 +18,18 @@
   </div>
 
   {% if vehicles %}
-  <div class="grid md:grid-cols-2 gap-4">
-    {% for vehicle in vehicles %}
-    <div class="bg-surface border border-border rounded-lg p-4">
-      <h3 class="font-bold">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h3>
-      {% if vehicle.registration %}
-        <p class="text-text-secondary text-sm">Rego: {{ vehicle.registration }}</p>
-      {% endif %}
-    </div>
-    {% endfor %}
-  </div>
-  {% else %}
-    <p class="text-text-secondary">No vehicles saved yet.</p>
-  {% endif %}
+    <div class="grid md:grid-cols-2 gap-4">
+        {% for vehicle in vehicles %}
+        <a href="{% url 'vehicle_detail' vehicle.id %}" class="block bg-surface border border-border rounded-lg p-4 hover:border-accent transition-colors">
+            <h3 class="font-bold">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h3>
+            {% if vehicle.registration %}
+                <p class="text-text-secondary text-sm">Rego: {{ vehicle.registration }}</p>
+            {% endif %}
+        </a>
+        {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-text-secondary">No vehicles saved yet.</p>
+    {% endif %}
 </div>
 {% endblock %}
