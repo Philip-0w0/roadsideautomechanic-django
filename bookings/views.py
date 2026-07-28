@@ -2,6 +2,17 @@ from django.shortcuts import render, redirect
 from .forms import BookingForm
 from accounts.models import Vehicle
 
+from django.db.models import Count, F
+from .models import AvailabilitySlot
+
+def get_available_slots():
+    return AvailabilitySlot.objects.filter(
+        is_blocked=False,
+    ).annotate(
+        booked_count=Count('bookingrequest')
+    ).filter(booked_count__lt=F('max_bookings'))
+
+
 def booking_create(request):
     if request.method == 'POST':
         if request.POST.get('website'):
