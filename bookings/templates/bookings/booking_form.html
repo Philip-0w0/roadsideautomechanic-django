@@ -25,7 +25,14 @@
     </div>
 
     <div>{{ form.service_category.label_tag }} {{ form.service_category }}</div>
-    <div>{{ form.preferred_date.label_tag }} {{ form.preferred_date }}</div>
+
+    <div>
+      {{ form.slot.label_tag }} {{ form.slot }}
+      {% if form.slot.errors %}
+        <p style="color: #ef4444;" class="text-sm">{{ form.slot.errors.0 }}</p>
+      {% endif %}
+    </div>
+
     <div>{{ form.description.label_tag }} {{ form.description }}</div>
     <div>{{ form.consent }} {{ form.consent.label_tag }}</div>
 
