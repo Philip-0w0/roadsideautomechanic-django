@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db import transaction
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from .forms import BookingForm
 from .models import AvailabilitySlot
 from accounts.models import Vehicle
@@ -9,7 +9,7 @@ def get_available_slots():
     return AvailabilitySlot.objects.filter(
         is_blocked=False,
     ).annotate(
-        booked_count=Count('bookingrequest')
+        booked_count=Count('bookingrequest', filter=~Q(bookingrequest__status='cancelled'))
     ).filter(booked_count__lt=F('max_bookings'))
 
 
