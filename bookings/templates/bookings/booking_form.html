@@ -1,62 +1,100 @@
 {% extends 'base.html' %}
 {% block title %}Book a Service | RoadsideAuto{% endblock %}
 {% block content %}
-<div class="mx-auto max-w-xl px-4 py-16">
+<div class="mx-auto max-w-3xl px-4 py-16">
   <h1 class="text-3xl font-bold mb-6">Request a Booking</h1>
-  <form method="post" class="space-y-4">
-    {% csrf_token %}
-    <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
 
-    <div>{{ form.customer_name.label_tag }} {{ form.customer_name }}</div>
-    <div>{{ form.email.label_tag }} {{ form.email }}</div>
-    <div>{{ form.phone.label_tag }} {{ form.phone }}</div>
+  <div class="bg-surface border border-border rounded-lg p-4 mb-8">
+    <div class="flex items-center justify-between mb-4">
+      <a href="?year={{ prev_year }}&month={{ prev_month }}" class="text-accent hover:text-accent-hover">&larr; Prev</a>
+      <h2 class="font-bold text-lg">{{ month_name }} {{ year }}</h2>
+      <a href="?year={{ next_year }}&month={{ next_month }}" class="text-accent hover:text-accent-hover">Next &rarr;</a>
+    </div>
+
+    <div class="grid grid-cols-7 gap-1 text-center text-xs text-text-secondary mb-2">
+      <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+    </div>
+
+    {% for week in calendar_weeks %}
+    <div class="grid grid-cols-7 gap-1 mb-1">
+      {% for day in week %}
+        {% if day.in_month %}
+          {% if day.has_availability %}
+            <a href="?year={{ year }}&month={{ month }}&date={{ day.date|date:'Y-m-d' }}"
+               class="block text-center py-2 rounded-md text-sm {% if day.is_selected %}bg-accent text-background font-bold{% else %}bg-surface-light hover:bg-accent hover:text-background{% endif %}">
+              {{ day.date.day }}
+            </a>
+          {% else %}
+            <div class="block text-center py-2 rounded-md text-sm text-text-secondary opacity-40">{{ day.date.day }}</div>
+          {% endif %}
+        {% else %}
+          <div></div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if selected_date %}
+    <h2 class="text-xl font-bold mb-4">Available times — {{ selected_date|date:"l, j F Y" }}</h2>
+
+    {% if day_slots %}
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="selected_date" value="{{ selected_date|date:'Y-m-d' }}">
+      <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        {% for slot in day_slots %}
+        <label class="block">
+          <input type="radio" name="slot" value="{{ slot.id }}" class="hidden peer" {% if forloop.first %}required{% endif %}>
+          <div class="text-center py-3 rounded-md border border-border cursor-pointer peer-checked:bg-accent peer-checked:text-background peer-checked:border-accent hover:border-accent">
+            {{ slot.start_time|time:"g:i A" }}
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+
+      <div>{{ form.customer_name.label_tag }} {{ form.customer_name }}</div>
+      <div>{{ form.email.label_tag }} {{ form.email }}</div>
+      <div>{{ form.phone.label_tag }} {{ form.phone }}</div>
+
+      {% if form.show_vehicle_dropdown %}
+        <div>{{ form.vehicle.label_tag }} {{ form.vehicle }}</div>
+      {% endif %}
+      <div id="manual-vehicle-fields" {% if form.show_vehicle_dropdown %}class="hidden"{% endif %}>
+        <div>{{ form.vehicle_make.label_tag }} {{ form.vehicle_make }}</div>
+        <div>{{ form.vehicle_model.label_tag }} {{ form.vehicle_model }}</div>
+        <div>{{ form.vehicle_year.label_tag }} {{ form.vehicle_year }}</div>
+        <div>{{ form.registration.label_tag }} {{ form.registration }}</div>
+      </div>
+
+      <div>{{ form.service_category.label_tag }} {{ form.service_category }}</div>
+      <div>{{ form.description.label_tag }} {{ form.description }}</div>
+      <div>{{ form.consent }} {{ form.consent.label_tag }}</div>
+      {% if form.slot.errors %}<p style="color: #ef4444;" class="text-sm">{{ form.slot.errors.0 }}</p>{% endif %}
+
+      <button type="submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover">
+        Submit Request
+      </button>
+    </form>
 
     {% if form.show_vehicle_dropdown %}
-      <div>
-        {{ form.vehicle.label_tag }} {{ form.vehicle }}
-      </div>
+    <script>
+      const vehicleSelect = document.getElementById('id_vehicle');
+      const manualFields = document.getElementById('manual-vehicle-fields');
+      function toggleManualFields() {
+        manualFields.classList.toggle('hidden', vehicleSelect.value !== '');
+      }
+      vehicleSelect.addEventListener('change', toggleManualFields);
+      toggleManualFields();
+    </script>
     {% endif %}
-
-    <div id="manual-vehicle-fields" {% if form.show_vehicle_dropdown %}class="hidden"{% endif %}>
-      <div>{{ form.vehicle_make.label_tag }} {{ form.vehicle_make }}</div>
-      <div>{{ form.vehicle_model.label_tag }} {{ form.vehicle_model }}</div>
-      <div>{{ form.vehicle_year.label_tag }} {{ form.vehicle_year }}</div>
-      <div>{{ form.registration.label_tag }} {{ form.registration }}</div>
-    </div>
-
-    <div>{{ form.service_category.label_tag }} {{ form.service_category }}</div>
-
-    <div>
-      {{ form.slot.label_tag }} {{ form.slot }}
-      {% if form.slot.errors %}
-        <p style="color: #ef4444;" class="text-sm">{{ form.slot.errors.0 }}</p>
-      {% endif %}
-    </div>
-
-    <div>{{ form.description.label_tag }} {{ form.description }}</div>
-    <div>{{ form.consent }} {{ form.consent.label_tag }}</div>
-
-    <button type="submit" class="bg-accent text-background px-6 py-3 rounded-md font-medium hover:bg-accent-hover">
-      Submit Request
-    </button>
-  </form>
+    {% else %}
+      <p class="text-text-secondary">No times available on this date. Please choose another day.</p>
+    {% endif %}
+  {% else %}
+    <p class="text-text-secondary">Select an available date above to see times.</p>
+  {% endif %}
 </div>
-
-{% if form.show_vehicle_dropdown %}
-<script>
-  const vehicleSelect = document.getElementById('id_vehicle');
-  const manualFields = document.getElementById('manual-vehicle-fields');
-
-  function toggleManualFields() {
-    if (vehicleSelect.value === '') {
-      manualFields.classList.remove('hidden');
-    } else {
-      manualFields.classList.add('hidden');
-    }
-  }
-
-  vehicleSelect.addEventListener('change', toggleManualFields);
-  toggleManualFields();
-</script>
-{% endif %}
 {% endblock %}

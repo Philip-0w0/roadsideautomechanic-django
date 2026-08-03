@@ -12,22 +12,22 @@ def home(request):
 def services(request):
     services_list = [
         {
-            'title': 'General Servicing',
-            'summary': 'Routine servicing to keep your vehicle running reliably and safely.',
-            'description': "Logbook and general servicing covering the checks and maintenance your vehicle needs to stay reliable, avoid costly breakdowns, and hold its value. We explain what's being done and why before any work starts.",
-            'cta': 'Book a service',
+            'title': 'Logbook Service',
+            'summary': "Manufacturer-schedule servicing to keep your warranty and vehicle history intact.",
+            'description': "Logbook servicing carried out to your vehicle's manufacturer schedule, covering the checks and maintenance required to keep your service history complete and warranty valid.",
+            'cta': 'Book a logbook service',
         },
         {
             'title': 'Diagnostics',
             'summary': 'Accurate fault-finding for warning lights, unusual noises, or performance issues.',
-            'description': 'Proper diagnostic work to identify the actual cause of an issue rather than guessing — using the right tools to check engine, electrical, and mechanical faults. You get a clear explanation of what\'s wrong before we quote any repair.',
+            'description': "Proper diagnostic work to identify the actual cause of an issue rather than guessing — using the right tools to check engine, electrical, and mechanical faults. You get a clear explanation of what's wrong before we quote any repair.",
             'cta': 'Book a diagnostic',
         },
         {
-            'title': 'Brake Repairs',
-            'summary': 'Brake inspection, repair, and replacement for safe stopping performance.',
-            'description': 'From pad and rotor replacement to full brake system checks, we make sure your vehicle stops the way it should. Safety-critical work, done properly and explained clearly.',
-            'cta': 'Book a brake check',
+            'title': 'General Repairs',
+            'summary': 'Mechanical repairs covering suspension, brakes, and everyday issues in one visit.',
+            'description': 'General mechanical repair work, from brake pads and suspension components to the smaller issues that come up between services — one straightforward repair visit instead of separate bookings for each fault.',
+            'cta': 'Book a repair',
         },
         {
             'title': 'Battery Replacement',
@@ -37,21 +37,33 @@ def services(request):
         },
         {
             'title': 'Vehicle Inspections',
-            'summary': 'Thorough inspections for peace of mind, roadworthiness, or pre-purchase decisions.',
+            'summary': 'Thorough inspections for peace of mind or roadworthiness.',
             'description': 'A full inspection covering the key mechanical, safety, and wear points of a vehicle, with a clear written summary of anything that needs attention now or in the near future.',
             'cta': 'Book an inspection',
         },
         {
-            'title': 'Suspension Checks',
-            'summary': 'Suspension inspection and repair for comfort, handling, and safety.',
-            'description': 'We check shocks, springs, and steering components for wear or damage, particularly important for vehicles that tow, carry heavy loads, or spend time off-road.',
-            'cta': 'Book a suspension check',
+            'title': 'Vehicle Purchase Inspection',
+            'summary': "An independent pre-purchase check before you buy.",
+            'description': "A dedicated inspection for a vehicle you're considering buying, checking for hidden mechanical issues, prior damage, and upcoming maintenance costs — so you can negotiate or walk away with confidence.",
+            'cta': 'Book a pre-purchase inspection',
         },
         {
             'title': 'Minor Mechanical Repairs',
             'summary': 'General mechanical repairs for everyday issues.',
             'description': 'Practical, honest repair work for the smaller mechanical issues that come up between services — done with a clear quote up front and no work started without your approval.',
             'cta': 'Get a repair quote',
+        },
+        {
+            'title': 'Caravan and Trailer Maintenance',
+            'summary': 'Servicing and repairs for caravans, trailers, and towing setups.',
+            'description': 'Maintenance and repair for caravans and trailers, including wheel bearings, brakes, suspension, and towing electrical connections — important checks that are easy to overlook until something fails on the road.',
+            'cta': 'Book caravan or trailer maintenance',
+        },
+        {
+            'title': 'Roadside Assistance',
+            'summary': "On-the-spot help when your vehicle won't start or won't move.",
+            'description': "Roadside support for breakdowns — battery issues, minor mechanical faults, and get-you-going repairs — so you're not always stuck waiting for a tow truck.",
+            'cta': 'Request roadside assistance',
         },
     ]
     return render(request, 'core/services.html', {'services': services_list})
@@ -81,6 +93,12 @@ def modifications(request):
             'summary': 'Roof rack supply and fitting for extra storage and touring capacity.',
             'description': "Roof racks fitted securely and rated for your intended load, whether that's recovery gear, camping equipment, or general touring storage.",
             'cta': 'Ask about roof rack fitting',
+        },
+        {
+            'title': 'Other Requests',
+            'summary': 'Have something specific in mind? Ask us.',
+            'description': "If you're after a 4x4 modification not listed here, get in touch and describe what you need — we'll let you know if it's something we can help with.",
+            'cta': 'Ask about your modification',
         },
     ]
     return render(request, 'core/modifications.html', {'modifications': modifications_list})
