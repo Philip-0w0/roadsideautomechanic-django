@@ -9,7 +9,7 @@ def home(request):
     ]
     return render(request, 'core/home.html', {'featured_services': featured_services})
 
-    
+
 def services(request):
     services_list = [
         {
@@ -106,15 +106,17 @@ def modifications(request):
 
 def gallery(request):
     projects = [
-        {
-            'title': 'Example Project',
-            'vehicle': '2020 Toyota Hilux',
-            'summary': 'Suspension upgrade and touring setup.',
-            'image': 'core/images/placeholder-1.jpg',
-        },
         # Add real entries here as photos become available.
         # Each needs: title, vehicle, summary, and an image path
         # relative to your static/ folder.
+        #
+        # Example:
+        # {
+        #     'title': 'Suspension Upgrade',
+        #     'vehicle': '2020 Toyota Hilux',
+        #     'summary': 'Suspension upgrade and touring setup.',
+        #     'image': 'core/images/hilux-suspension.webp',
+        # },
     ]
     return render(request, 'core/gallery.html', {'projects': projects})
 
