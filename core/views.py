@@ -3,12 +3,13 @@ from django.shortcuts import render
 # Create your views here.
 def home(request):
     featured_services = [
-        {'title': 'General Servicing', 'summary': 'Routine servicing to keep your vehicle running reliably and safely.'},
+        {'title': 'Logbook Service', 'summary': "Manufacturer-schedule servicing to keep your warranty and vehicle history intact."},
         {'title': 'Diagnostics', 'summary': 'Accurate fault-finding for warning lights, unusual noises, or performance issues.'},
-        {'title': 'Brake Repairs', 'summary': 'Brake inspection, repair, and replacement for safe stopping performance.'},
+        {'title': 'General Repairs', 'summary': 'Mechanical repairs covering suspension, brakes, and everyday issues in one visit.'},
     ]
     return render(request, 'core/home.html', {'featured_services': featured_services})
 
+    
 def services(request):
     services_list = [
         {
