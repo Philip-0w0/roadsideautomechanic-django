@@ -70,7 +70,13 @@
       </div>
 
       <div>{{ form.service_category.label_tag }} {{ form.service_category }}</div>
-      <div>{{ form.description.label_tag }} {{ form.description }}</div>
+
+    <div id="other-description-field" class="hidden">
+        {{ form.description.label_tag }} {{ form.description }}
+        {% if form.description.errors %}
+            <p style="color: #ef4444;" class="text-sm">{{ form.description.errors.0 }}</p>
+        {% endif %}
+    </div>
       <div>{{ form.consent }} {{ form.consent.label_tag }}</div>
       {% if form.slot.errors %}<p style="color: #ef4444;" class="text-sm">{{ form.slot.errors.0 }}</p>{% endif %}
 
@@ -81,13 +87,19 @@
 
     {% if form.show_vehicle_dropdown %}
     <script>
-      const vehicleSelect = document.getElementById('id_vehicle');
-      const manualFields = document.getElementById('manual-vehicle-fields');
-      function toggleManualFields() {
-        manualFields.classList.toggle('hidden', vehicleSelect.value !== '');
-      }
-      vehicleSelect.addEventListener('change', toggleManualFields);
-      toggleManualFields();
+        const serviceSelect = document.getElementById('id_service_category');
+        const otherDescriptionField = document.getElementById('other-description-field');
+      
+        function toggleOtherDescription() {
+          if (serviceSelect.value === 'Other') {
+            otherDescriptionField.classList.remove('hidden');
+          } else {
+            otherDescriptionField.classList.add('hidden');
+          }
+        }
+      
+        serviceSelect.addEventListener('change', toggleOtherDescription);
+        toggleOtherDescription();
     </script>
     {% endif %}
     {% else %}
