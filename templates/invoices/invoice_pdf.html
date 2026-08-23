@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: Helvetica, Arial, sans-serif; font-size: 11px; color: #000; }
+  .header { overflow: hidden; margin-bottom: 20px; }
+  .header-right { float: right; text-align: right; }
+  h1 { font-size: 16px; margin: 0 0 4px 0; }
+  .business-info { margin-bottom: 20px; }
+  .business-info strong { font-size: 13px; }
+  hr { border: none; border-top: 1px solid #ccc; margin: 15px 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th { text-align: left; border-bottom: 2px solid #000; padding: 6px 0; }
+  td { padding: 8px 0; border-bottom: 1px solid #eee; }
+  .totals { width: 250px; float: right; margin-top: 20px; }
+  .totals td { border: none; padding: 4px 0; }
+  .totals .total-row td { border-top: 2px solid #000; font-weight: bold; }
+  .footer { clear: both; margin-top: 60px; text-align: center; font-size: 10px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-right">
+      <h1>Invoice #{{ invoice.invoice_number }}</h1>
+      <p>
+        Issue date: {{ invoice.issue_date|date:"M d, Y" }}<br>
+        Due date: {{ invoice.due_date|date:"M d, Y" }}<br>
+        Rego: {{ invoice.service_record.vehicle.registration }}<br>
+        Year &amp; Model: {{ invoice.service_record.vehicle.year }} {{ invoice.service_record.vehicle.make }} {{ invoice.service_record.vehicle.model }}<br>
+        Kilometer: {{ invoice.service_record.odometer_km|default:"—" }}
+      </p>
+    </div>
+    <div class="business-info">
+      <strong>Roadside Auto</strong><br>
+      Warrigal Road 417-14<br>
+      Cheltenham Victoria 3192<br>
+      Australia<br>
+      info@roadsideautomechanic.com.au<br>
+      Company ID: 54 689 849 508
+    </div>
+  </div>
+
+  <hr>
+
+  <table style="border: none; width: 100%;">
+    <tr style="border: none;">
+      <td style="border: none; width: 50%; vertical-align: top;">
+        <strong>Bill to</strong><br>
+        {{ invoice.bill_to_name }}
+      </td>
+      <td style="border: none; width: 50%; vertical-align: top;">
+        <strong>Additional customer info</strong><br>
+        {{ invoice.bill_to_email }}<br>
+        {{ invoice.bill_to_phone }}
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th style="text-align: right;">Line total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in invoice.items.all %}
+      <tr>
+        <td>{{ item.description }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>A${{ item.unit_price_cents|floatformat:2 }}</td>
+        <td style="text-align: right;">A${{ item.line_total_cents|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="totals">
+    <tr><td>Net total</td><td style="text-align: right;">A${{ invoice.net_total_cents|floatformat:2 }}</td></tr>
+    <tr><td>Tax</td><td style="text-align: right;">A${{ invoice.tax_cents|floatformat:2 }}</td></tr>
+    <tr class="total-row"><td>Total</td><td style="text-align: right;">A${{ invoice.total_cents|floatformat:2 }}</td></tr>
+    <tr class="total-row"><td>Balance due</td><td style="text-align: right;">A${{ invoice.total_cents|floatformat:2 }}</td></tr>
+  </table>
+
+  <div class="footer">
+    <strong>Thank You For Your Business</strong><br><br>
+    ANZ Bank<br>
+    Account Name: Roadside Auto<br>
+    BSB: 013 220<br>
+    Account No.: 8062 35204
+  </div>
+</body>
+</html>
