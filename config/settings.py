@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'bookings',
     'accounts',
+    'invoices',
 ]
 
 MIDDLEWARE = [
