@@ -10,7 +10,14 @@ class InvoiceLineItemInline(admin.TabularInline):
 
 @admin.register(Invoice)
 class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ('invoice_number', 'bill_to_name', 'issue_date', 'download_link')
+    list_display = ('invoice_number', 'bill_to_name', 'issue_date', 'discount_type', 'download_link')
+    list_filter = ('discount_type',)
+    fields = (
+        'invoice_number', 'service_record', 'issue_date', 'due_date',
+        'bill_to_name', 'bill_to_email', 'bill_to_phone',
+        'discount_type', 'discount_value',
+    )
+    readonly_fields = ('invoice_number',)
     inlines = [InvoiceLineItemInline]
 
     def download_link(self, obj):

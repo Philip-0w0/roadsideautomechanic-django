@@ -67,21 +67,31 @@
     </thead>
     <tbody>
       {% for item in invoice.items.all %}
-      <tr>
-        <td>{{ item.description }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>A${{ item.unit_price_cents|floatformat:2 }}</td>
-        <td style="text-align: right;">A${{ item.line_total_cents|floatformat:2 }}</td>
-      </tr>
+        <tr>
+          <td>{{ item.description }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>A${{ item.unit_price_display }}</td>
+          <td style="text-align: right;">A${{ item.line_total_display }}</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
 
   <table class="totals">
-    <tr><td>Net total</td><td style="text-align: right;">A${{ invoice.net_total_cents|floatformat:2 }}</td></tr>
-    <tr><td>Tax</td><td style="text-align: right;">A${{ invoice.tax_cents|floatformat:2 }}</td></tr>
-    <tr class="total-row"><td>Total</td><td style="text-align: right;">A${{ invoice.total_cents|floatformat:2 }}</td></tr>
-    <tr class="total-row"><td>Balance due</td><td style="text-align: right;">A${{ invoice.total_cents|floatformat:2 }}</td></tr>
+    <tr><td>Subtotal</td><td style="text-align: right;">A${{ invoice.subtotal_display }}</td></tr>
+    {% if invoice.discount_type != 'none' %}
+    <tr>
+      <td>
+        Discount
+        {% if invoice.discount_type == 'percentage' %}({{ invoice.discount_value }}%){% endif %}
+      </td>
+      <td style="text-align: right;">-A${{ invoice.discount_display }}</td>
+    </tr>
+    {% endif %}
+    <tr><td>Net total</td><td style="text-align: right;">A${{ invoice.net_total_display }}</td></tr>
+    <tr><td>Tax</td><td style="text-align: right;">A${{ invoice.tax_display }}</td></tr>
+    <tr class="total-row"><td>Total</td><td style="text-align: right;">A${{ invoice.total_display }}</td></tr>
+    <tr class="total-row"><td>Balance due</td><td style="text-align: right;">A${{ invoice.total_display }}</td></tr>
   </table>
 
   <div class="footer">
